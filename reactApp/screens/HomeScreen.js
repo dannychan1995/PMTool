@@ -101,7 +101,7 @@ export default class HomeScreen extends React.Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Title>Create Project</Title>
+                  <Title>New Project</Title>
                 </Body>
                 <Right>
                   <Button transparent onPress = {() => {this.toggleModal(true)}}>
