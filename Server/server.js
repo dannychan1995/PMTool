@@ -3,6 +3,8 @@ var express = require('express');
 var http = require('http')
 var request = require("request");
 var mongoose = require("mongoose");
+const routes = require('./routes');
+
 
 var app = express();
 app.listen(3000, function () {
@@ -21,6 +23,8 @@ var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(routes);
 
 var Projects = require('./schema/projects');
 
