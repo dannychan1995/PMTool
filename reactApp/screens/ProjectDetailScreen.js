@@ -8,24 +8,29 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
-import { MonoText } from '../components/StyledText';
-import { ProjectDetailScreen } from '../screens/ProjectDetailScreen';
 import { ListView,Modal,TouchableHighlight } from 'react-native';
-import { Container, Header, Content,Left, Body, Right,Title, Button, Icon, List, ListItem, Text,Form, Item, Input, Label } from 'native-base';
+import { Card,CardItem,CheckBox, Container, Header, Content,Left, Body, Right,Title, Button, Icon, List, ListItem, Text,Form, Item, Input, Label } from 'native-base';
 
-const datas = [
-  'Simon Mignolet',
-  'Nathaniel Clyne',
-  'Dejan Lovren',
-  'Mama Sakho',
-  'Alberto Moreno',
-  'Emre Can',
-  'Joe Allen',
-  'Phil Coutinho',
-];
+const mockPJ = {
+  title:"backtest",
+  description:"this is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.",
+  todo: [
+    {
+      title: "brainstorm idea",
+      finish: false,
+    },
+    {
+      title: "Implement",
+      finish: true,
+    },
+    {
+      title: "Test",
+      finish: false,
+    }
+  ]
+};
 
-export default class HomeScreen extends React.Component {
+export default class ProjectDetailScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -34,7 +39,7 @@ export default class HomeScreen extends React.Component {
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       basic: true,
-      listViewData: datas,
+      project: mockPJ,
       modalVisible: false,
     };
   }
@@ -59,7 +64,7 @@ export default class HomeScreen extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Projects</Title>
+              <Title>Detail</Title>
             </Body>
             <Right>
               <Button transparent onPress = {() => {this.toggleModal(true)}}>
@@ -68,13 +73,28 @@ export default class HomeScreen extends React.Component {
             </Right>
           </Header>
           <Content>
+            <Card>
+              <CardItem hader>
+                <Text>
+                  {this.state.project.title}
+                </Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>
+                    {this.state.project.description}
+                  </Text>
+                </Body>
+              </CardItem>
+            </Card>
             <List
               leftOpenValue={75}
               rightOpenValue={-75}
-              dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+              dataSource={this.ds.cloneWithRows(this.state.project.todo)}
               renderRow={data =>
-                <ListItem onPress={() => this.props.navigation.navigate('ProjectDetailScreen', {name: 'Jane'})}>
-                  <Text> {data} </Text>
+                <ListItem>
+                  <CheckBox checked={data.finish} />
+                  <Text> {data.title} </Text>
                 </ListItem>}
               renderLeftHiddenRow={data =>
                 <Button full onPress={() => alert(data)}>
