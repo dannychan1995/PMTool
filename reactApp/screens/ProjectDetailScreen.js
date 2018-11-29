@@ -8,8 +8,10 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import { ListView,Modal,TouchableHighlight } from 'react-native';
-import { Card,CardItem,CheckBox, Container, Header, Content,Left, Body, Right,Title, Button, Icon, List, ListItem, Text,Form, Item, Input, Label } from 'native-base';
+import {  ListView,Modal,TouchableHighlight } from 'react-native';
+import { TodoCheckBox } from '../components/TodoCheckBox'
+import { Card,CardItem,Container, Header, Content,Left, Body, Right,Title, Button, Icon, List, ListItem, Text,Form, Item, Input, Label } from 'native-base';
+import * as Progress from 'react-native-progress';
 
 const mockPJ = {
   title:"backtest",
@@ -18,10 +20,38 @@ const mockPJ = {
     {
       title: "brainstorm idea",
       finish: false,
+      subTodo: [
+        {
+          title: "sub 1",
+          finish: true,
+          subTodo: [
+            {
+              title: "sub sub1",
+              finish: true,
+            },
+            {
+              title: "sub sub2",
+              finish: true,
+            },
+            {
+              title: "sub sub3",
+              finish: true,
+            }
+          ]
+        },
+        {
+          title: "sub2",
+          finish: true,
+        },
+        {
+          title: "sub3",
+          finish: false,
+        }
+      ]
     },
     {
       title: "Implement",
-      finish: true,
+      finish: false,
     },
     {
       title: "Test",
@@ -30,19 +60,40 @@ const mockPJ = {
   ]
 };
 
+
 export default class ProjectDetailScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    console.log(this.calSubTodoPercentage(mockPJ.todo))
     this.state = {
       basic: true,
       project: mockPJ,
       modalVisible: false,
+      progress: 0,
     };
+
   }
+  calSubTodoPercentage(subTodo){
+    // console.log(subTodo);
+    let total = 0;
+    let finish = 0;
+    for(todo of subTodo){
+      total += 1;
+      if(todo.subTodo && todo.subTodo.length > 0){
+        finish += this.calSubTodoPercentage(todo.subTodo);
+      } else {
+        finish += todo.finish? 1: 0;
+      }
+    }
+    return total===0? 0 :finish / total;
+
+  };
   deleteRow(secId, rowId, rowMap) {
     rowMap[`${secId}${rowId}`].props.closeRow();
     const newData = [...this.state.listViewData];
@@ -52,6 +103,22 @@ export default class ProjectDetailScreen extends React.Component {
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
    }
+   componentDidMount() {
+    this.animate();
+  }
+
+  animate() {
+    let progress = 0;
+    this.setState({ progress });
+    progress = this.calSubTodoPercentage(mockPJ.todo);
+
+    setTimeout(() => {
+      this.setState({ progress });
+    }, 100);
+
+  }
+
+
 
   render() {
     return (
@@ -75,6 +142,7 @@ export default class ProjectDetailScreen extends React.Component {
           <Content>
             <Card>
               <CardItem hader>
+                <Progress.Circle showsText animated textStyle ={{fontSize: 15}} progress={this.state.progress} size={50} />
                 <Text>
                   {this.state.project.title}
                 </Text>
@@ -93,7 +161,7 @@ export default class ProjectDetailScreen extends React.Component {
               dataSource={this.ds.cloneWithRows(this.state.project.todo)}
               renderRow={data =>
                 <ListItem>
-                  <CheckBox checked={data.finish} />
+                  <TodoCheckBox checked={data.finish} />
                   <Text> {data.title} </Text>
                 </ListItem>}
               renderLeftHiddenRow={data =>

@@ -10,8 +10,8 @@ import ProjectDetailScreen from '../screens/ProjectDetailScreen';
 
 
 const HomeStack = createStackNavigator({
-  ProjectDetailScreen : ProjectDetailScreen,
   Home: HomeScreen,
+  ProjectDetailScreen : ProjectDetailScreen,
 });
 
 HomeStack.navigationOptions = {
