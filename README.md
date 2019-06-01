@@ -12,11 +12,11 @@ This is a practicing project for react native.
 
 ### Screenshots
 
-####main page:
-[![mainpage](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/screenshot-pj.png "mainpage")](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/screenshot-pj.png "mainpage")
+#### main page:
+<a href="https://github.com/dannychan1995/PMTool/blob/develop/screenshot/screenshot-pj.png" title="mainpage" class="rich-diff-level-one"><img src="https://github.com/dannychan1995/PMTool/raw/develop/screenshot/screenshot-pj.png" alt="mainpage" title="mainpage" height="500"></a>
 
-####detail page:
-[![detail](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/ScreenShot-detail.png "detail")](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/ScreenShot-detail.png "detail")
+#### detail page:
+<a href="https://github.com/dannychan1995/PMTool/blob/develop/screenshot/ScreenShot-detail.png" title="detail" class="rich-diff-level-one"><img src="https://github.com/dannychan1995/PMTool/raw/develop/screenshot/ScreenShot-detail.png" alt="detail" title="detail" height="500"></a>
 
 ### Done
 - Main page (CRUD)
