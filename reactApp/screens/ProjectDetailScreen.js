@@ -10,16 +10,18 @@ import {
 import { WebBrowser } from 'expo';
 import {  ListView,Modal,TouchableHighlight } from 'react-native';
 import { TodoCheckBox } from '../components/TodoCheckBox'
+import { RecursiveTaskList } from '../components/RecursiveTaskList'
 import { Card,CardItem,Container, Header, Content,Left, Body, Right,Title, Button, Icon, List, ListItem, Text,Form, Item, Input, Label } from 'native-base';
+import { CheckBox } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 
 const mockPJ = {
-  title:"backtest",
-  description:"this is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.his is back test idea 7, tasfasmd asd asd.",
+  title:"Booking System 0001",
+  description:"This is Booking System 0001 description. This is Booking System 0001 description. This is Booking System 0001 description. This is Booking System 0001 description. This is Booking System 0001 description. This is Booking System 0001 description. ",
   todo: [
     {
       title: "brainstorm idea",
-      finish: false,
+      finish: true,
       subTodo: [
         {
           title: "sub 1",
@@ -96,9 +98,9 @@ export default class ProjectDetailScreen extends React.Component {
   };
   deleteRow(secId, rowId, rowMap) {
     rowMap[`${secId}${rowId}`].props.closeRow();
-    const newData = [...this.state.listViewData];
+    const newData = [...this.state.project.todo];
     newData.splice(rowId, 1);
-    this.setState({ listViewData: newData });
+    this.setState({ project: newData });
   }
    toggleModal(visible) {
       this.setState({ modalVisible: visible });
@@ -143,7 +145,7 @@ export default class ProjectDetailScreen extends React.Component {
             <Card>
               <CardItem hader>
                 <Progress.Circle showsText animated textStyle ={{fontSize: 15}} progress={this.state.progress} size={50} />
-                <Text>
+                <Text style={styles.pjHeader}>
                   {this.state.project.title}
                 </Text>
               </CardItem>
@@ -155,28 +157,30 @@ export default class ProjectDetailScreen extends React.Component {
                 </Body>
               </CardItem>
             </Card>
-            <List
+            {/* <List
               leftOpenValue={75}
               rightOpenValue={-75}
               dataSource={this.ds.cloneWithRows(this.state.project.todo)}
               renderRow={data =>
-                <ListItem>
-                  <TodoCheckBox checked={data.finish} />
-                  <Text> {data.title} </Text>
-                </ListItem>}
+                <ListItem >
+              {/* <TodoCheckBox checked={data.finish} />
+              <CheckBox checked={data.finish} />
+              <Text> {data.title} </Text>
+              </ListItem>}
               renderLeftHiddenRow={data =>
-                <Button full onPress={() => alert(data)}>
-                  <Icon active name="information-circle" />
-                </Button>}
+              <Button full onPress={() => alert(data)}>
+              <Icon active name="information-circle" />
+              </Button>}
               renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
-                  <Icon active name="trash" />
-                </Button>}
-            />
+              <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+              <Icon active name="trash" />
+              </Button>}
+            /> */}
+            <RecursiveTaskList data={this.ds.cloneWithRows(this.state.project.todo)} level={0} />
           </Content>
         </Container>
 
-        {/* ------modal for create project----------- */}
+        {/* ------modal for create task----------- */}
         <Modal animationType = {"slide"} transparent = {false}
           visible = {this.state.modalVisible}
           onRequestClose = {() => { console.log("Modal has been closed.") } }>
@@ -190,7 +194,7 @@ export default class ProjectDetailScreen extends React.Component {
                   </Button>
                 </Left>
                 <Body>
-                  <Title>New Project</Title>
+                  <Title>New Task</Title>
                 </Body>
                 <Right>
                   <Button transparent onPress = {() => {this.toggleModal(true)}}>
@@ -201,7 +205,7 @@ export default class ProjectDetailScreen extends React.Component {
               <Content>
                 <Form>
                   <Item fixedLabel>
-                    <Label>Project Name</Label>
+                    <Label>Task Name</Label>
                     <Input />
                   </Item>
                   <Item fixedLabel last>
@@ -215,46 +219,6 @@ export default class ProjectDetailScreen extends React.Component {
 
           </View>
         </Modal>
-        {/* <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-          source={
-          __DEV__
-          ? require('../assets/images/robot-dev.png')
-          : require('../assets/images/robot-prod.png')
-          }
-          style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening123</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-          <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-          Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-          </ScrollView>
-
-          <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View> */}
       </View>
     );
   }
@@ -379,5 +343,8 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  pjHeader: {
+    marginLeft: 20,
   },
 });
