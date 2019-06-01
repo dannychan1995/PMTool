@@ -12,11 +12,11 @@ This is a practicing project for react native.
 
 ### Screenshots
 
-#####main page:
-[![mainpage](https://github.com/dannychan1995/PMTool/screenshot/screenshot-pj.png "mainpage")](https://github.com/dannychan1995/PMTool/screenshot/screenshot-pj.png "mainpage")
+####main page:
+[![mainpage](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/screenshot-pj.png "mainpage")](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/screenshot-pj.png "mainpage")
 
-#####detail page:
-[![detail](https://github.com/dannychan1995/PMTool/screenshot/ScreenShot-detail.png "detail")](https://github.com/dannychan1995/PMTool/screenshot/ScreenShot-detail.png "detail")
+####detail page:
+[![detail](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/ScreenShot-detail.png "detail")](https://github.com/dannychan1995/PMTool/blob/develop/screenshot/ScreenShot-detail.png "detail")
 
 ### Done
 - Main page (CRUD)
